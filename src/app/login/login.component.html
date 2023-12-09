@@ -1,0 +1,7 @@
+<p>login works!</p>
+<button (click)="authService.loginWithRedirect()">login</button>
+<button (click)="authService.logout()">logout</button>
+<div *ngIf="authService.user$ | async as user">{{ user.name }}</div>
+<div>
+  {{ isAuthenticated ? "true" : "false" }}
+</div>
