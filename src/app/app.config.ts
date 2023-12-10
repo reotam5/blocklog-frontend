@@ -1,10 +1,12 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 import { AuthModule } from '@auth0/auth0-angular';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { graphqlProvider } from './graphql.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,9 +19,9 @@ export const appConfig: ApplicationConfig = {
         authorizationParams: {
           redirect_uri: environment.auth.redirectUri,
         },
-        useRefreshTokens: true,
-        cacheLocation: 'localstorage',
       })
     ),
+    provideHttpClient(withFetch()),
+    graphqlProvider,
   ],
 };
