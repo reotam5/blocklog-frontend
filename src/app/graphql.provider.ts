@@ -5,6 +5,7 @@ import { AuthService } from '@auth0/auth0-angular';
 import { APOLLO_OPTIONS, Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { lastValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
 
 const uri = 'http://localhost:3000/graphql'; // <-- add the URL of the GraphQL server here
 
@@ -14,8 +15,13 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
 
   const getTokens = async () => {
     try {
-      return await lastValueFrom(authService.getAccessTokenSilently());
-    } catch {
+      return await lastValueFrom(
+        authService.getAccessTokenSilently({
+          authorizationParams: { audience: environment.auth.audience },
+        })
+      );
+    } catch (error) {
+      console.error(error);
       return null;
     }
   };
@@ -24,7 +30,7 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : '',
+        Authorization: token ? `Bearer ${token}` : '',
       },
     };
   });
@@ -32,12 +38,6 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
   return {
     link: from([authLink, httpLink.create({ uri })]),
     cache: new InMemoryCache(),
-  };
-
-  return {
-    link: httpLink.create({ uri }),
-    cache: new InMemoryCache(),
-    credentials: 'include',
   };
 }
 
