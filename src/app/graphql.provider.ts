@@ -7,8 +7,6 @@ import { HttpLink } from 'apollo-angular/http';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../environments/environment';
 
-const uri = 'http://localhost:3000/graphql'; // <-- add the URL of the GraphQL server here
-
 export function apolloOptionsFactory(): ApolloClientOptions<any> {
   const httpLink = inject(HttpLink);
   const authService = inject(AuthService);
@@ -21,7 +19,6 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
         })
       );
     } catch (error) {
-      console.error(error);
       return null;
     }
   };
@@ -36,7 +33,7 @@ export function apolloOptionsFactory(): ApolloClientOptions<any> {
   });
 
   return {
-    link: from([authLink, httpLink.create({ uri })]),
+    link: from([authLink, httpLink.create({ uri: environment.backendUri })]),
     cache: new InMemoryCache(),
   };
 }
