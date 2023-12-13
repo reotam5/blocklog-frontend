@@ -3,7 +3,7 @@ export const environment = {
   auth: {
     domain: 'dev-22t2kpqn.us.auth0.com',
     clientId: 'AWlnZXzqJ2Sco66VTYxkpRgbO3nQrzQc',
-    redirectUri: 'http://localhost:4200',
+    redirectUri: 'https://blocklog-app.vercel.app',
     audience: 'https://blocklog-backend.vercel.app/graphql',
   },
   backendUri: 'https://blocklog-backend.vercel.app/graphql',
