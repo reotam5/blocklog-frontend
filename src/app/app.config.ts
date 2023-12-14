@@ -19,6 +19,8 @@ export const appConfig: ApplicationConfig = {
         authorizationParams: {
           redirect_uri: environment.auth.redirectUri,
         },
+        useRefreshTokens: true,
+        cacheLocation: 'localstorage',
       })
     ),
     provideHttpClient(withFetch()),
