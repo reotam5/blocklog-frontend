@@ -18,6 +18,7 @@ export const appConfig: ApplicationConfig = {
         clientId: environment.auth.clientId,
         authorizationParams: {
           redirect_uri: environment.auth.redirectUri,
+          audience: environment.auth.audience,
         },
         useRefreshTokens: true,
         cacheLocation: 'localstorage',
